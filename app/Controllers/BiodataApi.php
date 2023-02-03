@@ -33,7 +33,7 @@ class BiodataApi extends ResourceController
     public function show($id = null)
     {
         $model = new BiodataModel();
-        $data = $model->where('id', $id)->first();
+        $data = $model->where('id_biodata', $id)->first();
         $respons = [
             'status' => 200,
             'message' => 'get data success',
@@ -152,7 +152,7 @@ class BiodataApi extends ResourceController
      *
      * @return mixed
      */
-    public function update($id = null)
+    public function update($id_biodata = null)
     {
         $model = new BiodataModel();
         $rules = $this->validate([
@@ -201,7 +201,7 @@ class BiodataApi extends ResourceController
                 'message' => $this->validator->getErrors()
             ];
         }
-        if ($model->update($id, $data)) {
+        if ($model->update($id_biodata, $data)) {
             return $this->respondUpdated($respons);
         }
     }

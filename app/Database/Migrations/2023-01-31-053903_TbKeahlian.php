@@ -20,7 +20,7 @@ class TbKeahlian extends Migration
                 'constraint' => 155
             ]
         ]);
-        $this->forge->addKey('id_keahlian');
+        $this->forge->addKey('id_keahlian', true);
         $this->forge->createTable('tb_keahlian');
     }
 

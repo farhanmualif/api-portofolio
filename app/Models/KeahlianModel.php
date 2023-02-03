@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BiodataModel extends Model
+class KeahlianModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'tb_biodata';
-    protected $primaryKey       = 'id_biodata';
+    protected $table            = 'tb_keahlian';
+    protected $primaryKey       = 'id_keahlian';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_biodata', 'nama', 'email', 'no_telf', 'tgl_lahir', 'tempat_lahir', 'alamat', 'profile'];
+    protected $allowedFields    = ['id_keahlian', 'nama_keahlian'];
 
     // Dates
     protected $useTimestamps = false;
