@@ -152,7 +152,7 @@ class BiodataApi extends ResourceController
      *
      * @return mixed
      */
-    public function update($id_biodata = null)
+    public function update($id = null)
     {
         $model = new BiodataModel();
         $rules = $this->validate([
@@ -181,6 +181,15 @@ class BiodataApi extends ResourceController
                 'errors' => '{filed} tidak boleh kosong',
             ],
         ]);
+        $find = $model->where('id_biodata', $id)->first();
+        if (!$find) {
+            $respons = [
+                'status' => false,
+                'code' => 404,
+                'message' => 'data tidak diremukan'
+            ];
+            return $this->respond($respons);
+        }
         $data = [
             'nama' => $this->request->getVar('nama'),
             'email' => $this->request->getVar('email'),
@@ -201,7 +210,7 @@ class BiodataApi extends ResourceController
                 'message' => $this->validator->getErrors()
             ];
         }
-        if ($model->update($id_biodata, $data)) {
+        if ($model->update($id, $data)) {
             return $this->respondUpdated($respons);
         }
     }
@@ -214,7 +223,7 @@ class BiodataApi extends ResourceController
     public function delete($id = null)
     {
         $model = new BiodataModel();
-        $data = $model->where('id', $id)->first();;
+        $data = $model->where('id_biodata', $id)->first();;
         if (!$data) {
             $fail = [
                 'status' => 404,

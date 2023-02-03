@@ -28,8 +28,7 @@ class BiodataApi extends Migration
                 'constraint' => '100',
             ],
             'tgl_lahir' => [
-                'type' => 'VARCHAR',
-                'constraint' => '100',
+                'type' => 'DATE',
             ],
             'tempat_lahir' => [
                 'type' => 'VARCHAR',

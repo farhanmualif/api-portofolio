@@ -74,7 +74,7 @@ class KeahlianApi extends ResourceController
                 'errors' => '{tidak boleh kosong}'
             ]
         ];
-        if ($rules) {
+        if (!$rules) {
             $respons = $this->validator->getErrors();
             return $this->respond($respons);
         }
@@ -83,11 +83,20 @@ class KeahlianApi extends ResourceController
             'nama_keahlian' => $this->request->getVar('nama_keahlian')
         ];
 
-        if ($this->model->insert($data)) {
-            return $this->respondCreated('Sukses menambah data');
-        } else {
 
-            return $this->respond('gagal menambahkan data');
+        if ($this->model->insert($data)) {
+            $respons = [
+                'code' => 200,
+                'status' => true,
+                'sukses menambah data'
+            ];
+            return $this->respondCreated($respons);
+        } else {
+            $respons = [
+                'status' => false,
+                'message' => 'gagal menambah data'
+            ];
+            return $this->respond($respons);
         }
     }
 
@@ -109,10 +118,21 @@ class KeahlianApi extends ResourceController
     public function update($id = null)
     {
         $rules = $this->validate([
-            'nama_keahlian' =>[
+            'nama_keahlian' => [
                 'rules' => 'required',
                 'errors' => '{field} tidak boleh kosong'
-            ]]);
+            ]
+        ]);
+
+        $find = $this->model->where('id_keahlian', $id)->first();
+        if (!$find) {
+            $respons = [
+                'status' => false,
+                'code' => 404,
+                'message' => 'data tidak diremukan'
+            ];
+            return $this->respond($respons);
+        }
 
         $data = [
             'nama_keahlian' => $this->request->getVar('nama_keahlian')
@@ -122,16 +142,15 @@ class KeahlianApi extends ResourceController
             'status' => true,
             'message' => 'update data berhasil'
         ];
-        if (!$rules){
+        if (!$rules) {
             $respons = [
                 'status' => 404,
                 'message' => $this->validator->getErrors()
             ];
         }
-        if ($this->model->update($id,$data)){
+        if ($this->model->update($id, $data)) {
             return $this->respondUpdated($respons);
         }
-
     }
 
     /**
@@ -141,15 +160,27 @@ class KeahlianApi extends ResourceController
      */
     public function delete($id = null)
     {
-        $data = $this->model->find('id_keahlian',$id)->first();
-        if ($data){
-            if ($this->model->delete($data)){
-                $this->respondDeleted('delete data berhsil');
+        $data = $this->model->where('id_keahlian', $id)->first();
+        if ($data) {
+            if ($this->model->delete($id)) {
+                $repons = [
+                    'status' => true,
+                    'message' => 'berhasil menghapus data'
+                ];
+                return $this->respondDeleted($repons);
             } else {
-                $this->respond('gagal menghapus data');
+                $repons = [
+                    'status' => false,
+                    'message' => 'gagal menghapus data'
+                ];
+                return $this->respond($repons);
             }
         } else {
-            $this->respond('data tidak ditemukan');
+            $respons = [
+                'status' => false,
+                'message' => 'data tidak ditemukan'
+            ];
+            return $this->respond($respons);
         }
     }
 }
