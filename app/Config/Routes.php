@@ -32,6 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'Biodata::index');
 $routes->resource('biodataapi');
 $routes->resource('keahlianapi');
+$routes->resource('portofolioapi');
 
 /*
  * --------------------------------------------------------------------

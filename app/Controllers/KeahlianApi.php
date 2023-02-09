@@ -70,8 +70,8 @@ class KeahlianApi extends ResourceController
     {
         $rules = [
             'nama_keahlian' => [
-                'rules' => 'require',
-                'errors' => '{tidak boleh kosong}'
+                'rules' => 'required',
+                'errors' => '{field} tidak boleh kosong'
             ]
         ];
         if (!$rules) {
